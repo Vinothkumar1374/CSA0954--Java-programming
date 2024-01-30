@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+public class Reverse_Alphabet {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter day: ");
+        int day = input.nextInt();
+
+        System.out.print("Enter month: ");
+        int month = input.nextInt();
+
+        System.out.print("Enter year: ");
+        int year = input.nextInt();
+
+        if (isValidDate(day, month, year)) {
+
+            String dayOfWeek = findDayOfWeek(day, month, year);
+
+            System.out.println("Day of the week: " + dayOfWeek);
+        } else {
+            System.out.println("Invalid date");
+        }
+
+        input.close();
+    }
+
+    private static boolean isValidDate(int day, int month, int year) {
+        if (year >= 1971 && year <= 2100 && month >= 1 && month <= 12) {
+            int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            
+            if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+                daysInMonth[2] = 29;
+            }
+
+            return day >= 1 && day <= daysInMonth[month];
+        }
+
+        return false;
+    }
+
+    private static String findDayOfWeek(int day, int month, int year) {
+        int[] t = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+        year -= (month < 3) ? 1 : 0;
+        int dayOfWeekIndex = (year + year/4 - year/100 + year/400 + t[month-1] + day) % 7;
+        
+        String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        return daysOfWeek[dayOfWeekIndex];
+    }
+}

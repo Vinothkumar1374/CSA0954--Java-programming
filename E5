@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+public class LCMGCDCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the number of values
+        System.out.print("Enter the number of values (n): ");
+        int n = scanner.nextInt();
+
+        // Read the numbers
+        int[] numbers = new int[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter Number " + (i + 1) + ": ");
+            numbers[i] = scanner.nextInt();
+        }
+
+        // Calculate LCM and GCD
+        int lcm = calculateLCM(numbers);
+        int gcd = calculateGCD(numbers);
+
+        // Print the results
+        System.out.println("LCM = " + lcm);
+        System.out.println("GCD = " + gcd);
+
+        // Close the scanner to avoid resource leak
+        scanner.close();
+    }
+
+    // Method to calculate LCM of an array of numbers
+    private static int calculateLCM(int[] numbers) {
+        int result = numbers[0];
+        for (int i = 1; i < numbers.length; i++) {
+            result = lcm(result, numbers[i]);
+        }
+        return result;
+    }
+
+    // Method to calculate GCD of an array of numbers
+    private static int calculateGCD(int[] numbers) {
+        int result = numbers[0];
+        for (int i = 1; i < numbers.length; i++) {
+            result = gcd(result, numbers[i]);
+        }
+        return result;
+    }
+
+    // Method to calculate the LCM of two numbers
+    private static int lcm(int a, int b) {
+        return (a * b) / gcd(a, b);
+    }
+
+    // Method to calculate the GCD of two numbers using Euclidean algorithm
+    private static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}
